@@ -17,14 +17,12 @@ const reducer = combineReducers({
     trainerDetails: trainerDetailsReducer,
     trainerSave: trainerSaveReducer,
     trainerDelete: trainerDeleteReducer,
-    userSignin: userSigninReducer,
-    userUpdate: userUpdateReducer,
-    
     staffList: staffListReducer,
     staffDetails: staffDetailsReducer,
     staffSave: staffSaveReducer,
     staffDelete: staffDeleteReducer,
-
+    userSignin: userSigninReducer,
+    userUpdate: userUpdateReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

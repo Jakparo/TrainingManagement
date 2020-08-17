@@ -56,7 +56,7 @@ function TrainersScreen(props){
                 error ? <div> {error}</div> :
                 <Row>
                     {
-                        userInfo && userInfo.isAdmin && (
+                        userInfo.isAdmin || userInfo.isTraining  ?(
                             <>
                             {
                                 trainers.map(trainer => 
@@ -73,7 +73,7 @@ function TrainersScreen(props){
                             )
                             }
                             </>
-                        )
+                        ):<></>
                     }
 
                 </Row>

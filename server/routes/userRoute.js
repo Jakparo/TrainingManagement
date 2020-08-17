@@ -1,6 +1,6 @@
 import express from 'express';
 import User from '../models/userModel';
-import { getToken, isAuth, isAdmin } from '../util';
+import { getToken, isAuth, isAdmin, isTraining, isTrainer } from '../util';
 
 const router = express.Router();
 
@@ -13,11 +13,11 @@ router.get("/trainer", async (req, res) => {
             $options: 'i'
         }
     } : {};
-    const trainers = await User.find({...name,...searchKeyword,isTrainer:'true'});
+    const trainers = await User.find({...name,...searchKeyword, isTrainer:'true'});
     res.send(trainers);
 });
 
-router.post("/trainer", isAuth, isAdmin, async (req, res) => {
+router.post("/trainer", isAuth, async (req, res) => {
     const trainer = new User({
         name: req.body.name,
         email: req.body.email,
@@ -34,7 +34,7 @@ router.post("/trainer", isAuth, isAdmin, async (req, res) => {
         return res.status(500).send({ message: ' Error in Creating Trainer.' });
 })
 
-router.put("/trainer/:id", isAuth, isAdmin, async (req, res) => {
+router.put("/trainer/:id", isAuth, async (req, res) => {
     const trainerId = req.params.id;
     const trainer = await User.findById(trainerId);
     if (trainer) {
@@ -50,7 +50,7 @@ router.put("/trainer/:id", isAuth, isAdmin, async (req, res) => {
     }
 }})
 
-router.delete("/trainer/:id", isAuth, isAdmin, async (req, res) => {
+router.delete("/trainer/:id", isAuth, async (req, res) => {
     const deletedTrainer = await User.findById(req.params.id);
     if (deletedTrainer) {
         await deletedTrainer.remove();
@@ -84,7 +84,7 @@ router.get("/staff", async (req, res) => {
     res.send(staffs);
 });
 
-router.post("/staff", isAuth, isAdmin, async (req, res) => {
+router.post("/staff", isAuth, async (req, res) => {
     const staff = new User({
         name: req.body.name,
         email: req.body.email,
@@ -131,6 +131,74 @@ router.get('/staff/:id', async (req, res) => {
     } else {
         console.log('Something wrong');
         res.status(404).send({ message: 'Staff Not Found.' });
+    }
+});
+
+// Trainee
+
+router.get("/trainee", async (req, res) => {
+    const name = req.query.name ? {name: req.query.name} : {};
+    const searchKeyword = req.query.searchKeyword ? {
+        name: {
+            $regex: req.query.searchKeyword,
+            $options: 'i'
+        }
+    } : {};
+    const trainees = await User.find({...name,...searchKeyword, isTrainer:'false', isTraining:'false', isAdmin:'false'});
+    res.send(trainees);
+});
+
+router.post("/trainee", isAuth,isTraining, async (req, res) => {
+    const trainee = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        toeic: req.body.toeic,
+        department: req.body.department,
+        address: req.body.address
+    });
+
+    const newTrainee = await trainee.save();
+    if (newTrainee) {
+        return res.status(201).send({ message: 'New Trainee Created', data: newTrainee });
+    }
+        return res.status(500).send({ message: ' Error in Creating Trainee.' });
+})
+
+router.put("/trainee/:id", isAuth, isTraining, async (req, res) => {
+    const traineeId = req.params.id;
+    const trainee = await User.findById(traineeId);
+    if (trainee) {
+        trainee.name = req.body.name;
+        trainee.email = req.body.email;
+        trainee.password = req.body.password;
+        trainee.toeic= req.body.toeic;
+        trainee.department= req.body.department;
+        trainee.address= req.body.address
+        
+        const updatedTrainee = await trainee.save();
+    if (updatedTrainee) {
+        return res.status(200).send({ message: 'Trainee Updated', data: updatedTrainee, token: getToken(updatedTrainee)});
+    }
+}})
+
+router.delete("/trainee/:id", isAuth, isTraining, async (req, res) => {
+    const deletedTrainee = await User.findById(req.params.id);
+    if (deletedTrainee) {
+        await deletedTrainee.remove();
+        res.send({ message: "Trainee Deleted" });
+    } else {
+        res.send("Error in Deletion.");
+    }
+});
+
+router.get('/trainee/:id', async (req, res) => {
+    const trainee = await User.findOne({ _id: req.params.id });
+    if (trainee) {
+        res.send(trainee);
+    } else {
+        console.log('Something wrong');
+        res.status(404).send({ message: 'Trainee Not Found.' });
     }
 });
 

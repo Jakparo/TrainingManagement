@@ -7,13 +7,11 @@ import config from './config';
 import userRoute from './routes/userRoute';
 import orderRoute from './routes/orderRoute';
 
-dotenv.config();
-
 const mongodbUrl = config.MONGODB_URL;
 const app = express();
-const port = 5000;
 
 app.use(bodyParser.json());
+
 
 mongoose.connect(mongodbUrl, {
     useNewUrlParser: true,
@@ -26,4 +24,4 @@ app.use("/api/users", userRoute);
 app.use("/api/orders", orderRoute);
 
 
-app.listen(port, ()=> {console.log(`Server started at http://localhost:${port}`)});
+app.listen(config.PORT, ()=> {console.log(`Server started at http://localhost:${port}`)});

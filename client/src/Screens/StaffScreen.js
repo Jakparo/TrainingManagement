@@ -57,6 +57,8 @@ function StaffScreen(props){
     const deleteHandler = (staff) => {
         dispatch(deleteStaff(staff._id));
         props.history.push('/staffs');
+        
+        
     }
 
 
