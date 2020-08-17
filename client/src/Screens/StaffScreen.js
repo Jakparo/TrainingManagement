@@ -4,29 +4,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Spinner, Row, Col, Table,
 FormGroup, Label, Input, Button, Form} from 'reactstrap';
 
-import { detailsTrainer,  saveTrainer, deleteTrainer} from '../actions/adminActions';
+import { detailsStaff,  saveStaff, deleteStaff} from '../actions/adminActions';
 import  url  from '../icons/return.svg'
 
 
 
 
-function TrainerScreen(props){
+function StaffScreen(props){
+    const redirect = props.location.search?props.location.search.split("=")[1]:'/staffs';
 
     const [modalVisible, setModalVisible] = useState(false);
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [type, setType] = useState('');
-    const [phone, setPhone] = useState('');
     const [password,  setPassword] = useState('');
-    const trainerSave = useSelector(state => state.trainerSave);
-    const { loading: loadingSave, success: successSave, error: errorSave } = trainerSave;
+    const staffSave = useSelector(state => state.staffSave);
+    const { loading: loadingSave, success: successSave, error: errorSave } = staffSave;
     
-    const trainerDetails = useSelector(state => state.trainerDetails );
-    const { trainer, loading, error } = trainerDetails;
+    const staffDetails = useSelector(state => state.staffDetails );
+    const { staff, loading, error } = staffDetails;
 
-    const trainerDelete = useSelector(state => state.trainerDelete);
-    const { loading: loadingDelete, success: successDelete, error: errorDelete } = trainerDelete;
+    const staffDelete = useSelector(state => state.staffDelete);
+    const { loading: loadingDelete, success: successDelete, error: errorDelete } = staffDelete;
 
     const dispatch = useDispatch();
 
@@ -34,32 +33,30 @@ function TrainerScreen(props){
         if (successSave) {
             setModalVisible(false);
         }
-        dispatch(detailsTrainer(props.match.params.id));
+        dispatch(detailsStaff(props.match.params.id));
         return () => {
-        
+            // 
         }
     }, [successSave]);
 
-    const openModal = (trainer) => {
+    const openModal = (staff) => {
         setModalVisible(true);
-        setId(trainer._id);
-        setName(trainer.name);
-        setEmail(trainer.email);
-        setPassword(trainer.password);
-        setType(trainer.type);
-        setPhone(trainer.phone);
+        setId(staff._id);
+        setName(staff.name);
+        setEmail(staff.email);
+        setPassword(staff.password);
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveTrainer({
+        dispatch(saveStaff({
             _id: id,
-            name, email, password, type, phone
+            name, email, password
         }));
     }
-    const deleteHandler = (trainer) => {
-        dispatch(deleteTrainer(trainer._id));
-        props.history.push('/trainers');
+    const deleteHandler = (staff) => {
+        dispatch(deleteStaff(staff._id));
+        props.history.push('/staffs');
     }
 
 
@@ -68,7 +65,7 @@ function TrainerScreen(props){
         <div>
             <p className="back-to-home">
                 <span>
-                    <Link to="/trainers"> <img src={url} width={32} height={32}/></Link>
+                    <Link to="/staffs"> <img src={url} width={32} height={32}/></Link>
                 </span>
             </p>
         </div>
@@ -101,43 +98,26 @@ function TrainerScreen(props){
                             <Input value={password} type="password" name="password" id="password"
                             onChange={(e) => setPassword(e.target.value)}/>
                         </FormGroup>
-                        <FormGroup>
-                            <Label for="type">Type</Label>
-                            <Input value={type} type="select" name="type" id="type"
-                            onChange={(e) => setType(e.target.value)}>
-                                <option>Internal</option>
-                                <option>External</option>
-                            </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="phone">Phone</Label>
-                            <Input value={phone} type="number" name="phone" id="phone"
-                            onChange={(e) => setPhone(e.target.value)}/>
-                        </FormGroup>
                         <Button type="submit" outline color="primary" className='mr-2'>Update</Button>
                     </Form>
                 </Col>}
-                <Col className='mx-auto' sm='10' xl='8' lg='8' md='8'>
+        <Col className='mx-auto' sm='8' xl='6' lg='6' md='6'>
             
             <Table dark>
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Type</th>
-                        <th>Phone</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{trainer.name}</td>
-                        <td>{trainer.email}</td>
-                        <td>{trainer.type}</td>
-                        <td>{trainer.phone}</td>
+                        <td>{staff.name}</td>
+                        <td>{staff.email}</td>
                         <td>
-                            <Button color="primary" outline onClick={() => openModal(trainer)} >Edit</Button>
+                            <Button color="primary" outline onClick={() => openModal(staff)} >Edit</Button>
                             {' '}
-                            <Button color="danger" outline onClick={() => deleteHandler(trainer)} >Delete</Button>
+                            <Button color="danger" outline onClick={() => deleteHandler(staff)} >Delete</Button>
                         </td>
                     </tr>
                 
@@ -150,4 +130,4 @@ function TrainerScreen(props){
     )  
 }
 
-export default TrainerScreen;
+export default StaffScreen;

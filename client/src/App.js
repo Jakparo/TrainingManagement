@@ -8,10 +8,8 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter, Route, Link} from 'react-router-dom';
 
 // Import Screen Components
-import ProductsScreen from './Screens/ProductsScreen';
 import FirstScreen from './Screens/FirstScreen';
 import HomeScreen from './Screens/HomeScreen';
-import ProductScreen from './Screens/ProductScreen';
 
 import SigninScreen from './Screens/SigninScreen';
 
@@ -21,6 +19,9 @@ import TrainersScreen from './Screens/TrainersScreen'
 import TrainerScreen from './Screens/TrainerScreen'
 import CreateTrainer from './Screens/CreateTrainer'
 
+import StaffsScreen from './Screens/StaffsScreen'
+import StaffScreen from './Screens/StaffScreen'
+import CreateStaff from './Screens/CreateStaff'
 
 function App() {
     
@@ -87,16 +88,15 @@ function App() {
                 <Container fluid style={{marginTop: '2rem', height: '80vh'}} >
                     
                     <Route path="/profile" component={ProfileScreen} />
-                    
-                    <Route path="/products" component={ProductsScreen} />
-                   
-                    <Route path="/createTrainer" exact component={CreateTrainer}/>
                     <Route path="/signin" component={SigninScreen}/>
+                    <Route path="/createTrainer" exact component={CreateTrainer}/>
                     <Route path="/trainer/:id" exact component={TrainerScreen}/>
-                    <Route path="/product/:id" exact component={ProductScreen}/>
-                    <Route path="/home" exact component={HomeScreen}/>
                     <Route path="/trainers" exact component={TrainersScreen}/>
+                    <Route path="/home" exact component={HomeScreen}/>
                     <Route path="/" exact component={FirstScreen}/>
+                    <Route path="/createStaff" exact component={CreateStaff}/>
+                    <Route path="/staff/:id" exact component={StaffScreen}/>
+                    <Route path="/staffs" exact component={StaffsScreen}/>
 
                 </Container>
             </main>

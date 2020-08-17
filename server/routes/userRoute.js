@@ -71,6 +71,69 @@ router.get('/trainer/:id', async (req, res) => {
     }
 });
 
+//Staff
+router.get("/staff", async (req, res) => {
+    const name = req.query.name ? {name: req.query.name} : {};
+    const searchKeyword = req.query.searchKeyword ? {
+        name: {
+            $regex: req.query.searchKeyword,
+            $options: 'i'
+        }
+    } : {};
+    const staffs = await User.find({...name,...searchKeyword,isTraining:'true'});
+    res.send(staffs);
+});
+
+router.post("/staff", isAuth, isAdmin, async (req, res) => {
+    const staff = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        isTraining: true
+    });
+
+    const newStaff = await staff.save();
+    if (newStaff) {
+        return res.status(201).send({ message: 'New Staff Created', data: newStaff });
+    }
+        return res.status(500).send({ message: ' Error in Creating Staff.' });
+})
+
+router.put("/staff/:id", isAuth, isAdmin, async (req, res) => {
+    const staffId = req.params.id;
+    const staff = await User.findById(staffId);
+    if (staff) {
+        staff.name = req.body.name;
+        staff.email = req.body.email;
+        staff.password = req.body.password;
+        
+        const updatedStaff = await staff.save();
+    if (updatedStaff) {
+        return res.status(200).send({ message: 'Staff Updated', data: updatedStaff, token: getToken(updatedStaff)});
+    }
+}})
+
+router.delete("/staff/:id", isAuth, isAdmin, async (req, res) => {
+    const deletedStaff = await User.findById(req.params.id);
+    if (deletedStaff) {
+        await deletedStaff.remove();
+        res.send({ message: "Staff Deleted" });
+    } else {
+        res.send("Error in Deletion.");
+    }
+});
+
+
+router.get('/staff/:id', async (req, res) => {
+    const staff = await User.findOne({ _id: req.params.id });
+    if (staff) {
+        res.send(staff);
+    } else {
+        console.log('Something wrong');
+        res.status(404).send({ message: 'Staff Not Found.' });
+    }
+});
+
 // All user
 router.post('/signin', async(req,res)=>{
     const signinUser = await User.findOne({
@@ -112,7 +175,7 @@ router.get("/createadmin", async (req, res) => {
 router.get("/createtrainer", async (req, res) => {
     try {
         const user = new User({ 
-            name:'Staff2',
+            name:'Trainer2',
             email:'trainer2@gmail.com',
             password:'12345',
             isTrainer: true
@@ -124,4 +187,18 @@ router.get("/createtrainer", async (req, res) => {
     }
 });
 
+router.get("/createstaff", async (req, res) => {
+    try {
+        const user = new User({ 
+            name:'Staff1',
+            email:'staff1@gmail.com',
+            password:'12345',
+            isTraining: true
+        });
+        const newUser = await user.save();
+        res.send(newUser);    
+    } catch (error) {
+        res.send({ msg: error.message });    
+    }
+});
 export default router;

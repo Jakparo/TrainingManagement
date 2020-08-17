@@ -2,15 +2,11 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import Cookie from 'js-cookie';
 
-// import { productListReducer, productDetailsReducer, 
-//         productSaveReducer, productDeleteReducer } 
-// from './reducers/productReducers';
-
-import { trainerListReducer, trainerDetailsReducer, trainerSaveReducer, trainerDeleteReducer } from './reducers/adminReducers'
+import { trainerListReducer, trainerDetailsReducer, trainerSaveReducer, trainerDeleteReducer,
+        staffListReducer, staffDetailsReducer, staffSaveReducer, staffDeleteReducer 
+    } from './reducers/adminReducers'
 
 import { userSigninReducer, userUpdateReducer } from './reducers/userReducers';
-
-
 
 
 const userInfo = Cookie.getJSON("userInfo") || null;
@@ -23,6 +19,11 @@ const reducer = combineReducers({
     trainerDelete: trainerDeleteReducer,
     userSignin: userSigninReducer,
     userUpdate: userUpdateReducer,
+    
+    staffList: staffListReducer,
+    staffDetails: staffDetailsReducer,
+    staffSave: staffSaveReducer,
+    staffDelete: staffDeleteReducer,
 
 });
 

@@ -37,21 +37,6 @@ function HomeScreen(props){
                                 </Col>
                             </>  
                         )}
-                    {/* // products.map(product => 
-                    //     <Col lg='3' md='4' sm='6' key={product._id}>
-                            <Card>
-                                <Link to={'/product/'+ product._id}>
-                                    <CardImg top width="100%" src={product.image} alt="product" />
-                                    <CardBody>
-                                        <CardTitle className="font-weight-bold">{product.name}</CardTitle>
-                                        <CardSubtitle>{product.continent}</CardSubtitle>
-                                        <CardSubtitle className="font-weight-bold">${product.price}</CardSubtitle>
-                                        <CardSubtitle>{product.rating} stars</CardSubtitle>
-                                    </CardBody>
-                                </Link>
-                            </Card>
-                    //     </Col>
-                    //      */}
                     
                 </Row>
             }

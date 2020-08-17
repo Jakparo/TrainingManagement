@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card, CardBody, CardTitle ,Spinner, Row, Col,
 Form, FormGroup, Input, Button} from 'reactstrap';
-import { listTrainers } from '../actions/adminActions';
+import { listStaffs } from '../actions/adminActions';
 import search from '../icons/search.svg';
 import  url  from '../icons/return.svg'
 
-function TrainersScreen(props){
+function StaffsScreen(props){
     const userSignin = useSelector(state=>state.userSignin);
     const {userInfo} = userSignin;
     const [searchKeyword, setSearchKeyword] = useState('');
     const name = props.match.params.id ? props.match.params.id : '';
-    const trainerList =  useSelector(state => state.trainerList);
-    const {trainers, loading, error} = trainerList;
+    const staffList =  useSelector(state => state.staffList);
+    const {staffs, loading, error} = staffList;
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(listTrainers(name));
+        dispatch(listStaffs(name));
         return () => {
             //
         };
@@ -25,7 +25,7 @@ function TrainersScreen(props){
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(listTrainers(name, searchKeyword))
+        dispatch(listStaffs(name, searchKeyword))
     }
 
     return <>
@@ -44,7 +44,7 @@ function TrainersScreen(props){
                         <Input className="border"  name="searchKeyword" onChange={(e) => setSearchKeyword(e.target.value)} />
                         <Button color="light" className="border"><img src={search} width={22} height={22}/></Button>
                         <Button color="success" className="border ml-5">
-                            <Link to="/createTrainer" style={{textDecoration:'none', color: 'white'}}>
+                            <Link to="/createStaff" style={{textDecoration:'none', color: 'white'}}>
                                 Create
                             </Link>
                         </Button>
@@ -59,13 +59,13 @@ function TrainersScreen(props){
                         userInfo && userInfo.isAdmin && (
                             <>
                             {
-                                trainers.map(trainer => 
-                                    <Col lg='3' md='4' sm='6' xs='6' key={trainer._id}>
+                                staffs.map(staff => 
+                                    <Col lg='3' md='4' sm='6' xs='6' key={staff._id}>
                                         <Card>
-                                            <Link to={'/trainer/'+ trainer._id}>
+                                            <Link to={'/staff/'+ staff._id}>
                                             <div style={{backgroundColor: '#646566', height:'22vh'}}/>
                                                 <CardBody>
-                                                    <CardTitle className="font-weight-bold">{trainer.name}</CardTitle>
+                                                    <CardTitle className="font-weight-bold">{staff.name}</CardTitle>
                                                 </CardBody>
                                             </Link>
                                         </Card>
@@ -81,4 +81,4 @@ function TrainersScreen(props){
     </>
 }
 
-export default TrainersScreen;
+export default StaffsScreen;

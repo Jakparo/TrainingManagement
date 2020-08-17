@@ -3,51 +3,47 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Spinner, Row, Col, Table,
 FormGroup, Label, Input, Button, Form} from 'reactstrap';
-import {  saveTrainer} from '../actions/adminActions';
+
+import {saveStaff} from '../actions/adminActions';
 import  url  from '../icons/return.svg'
 
-function CreateTrainer(props){
-
+function CreateStaff(props){
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [type, setType] = useState('');
-    const [phone, setPhone] = useState('');
     const [password,  setPassword] = useState('');
-    const trainerSave = useSelector(state => state.trainerSave);
-    const { loading: loadingSave, success: successSave, error: errorSave } = trainerSave;
+    const staffSave = useSelector(state => state.staffSave);
+    const { loading: loadingSave, success: successSave, error: errorSave } = staffSave;
     
-    const trainerDetails = useSelector(state => state.trainerDetails );
-    const { trainer, loading, error } = trainerDetails;
+    const staffDetails = useSelector(state => state.staffDetails );
+    const { staff, loading, error } = staffDetails;
 
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (successSave) {
-
+    
         }
         return () => {
-        
+            // 
         }
     }, [successSave]);
 
-    const openModal = (trainer) => {
-        setId(trainer._id);
-        setName(trainer.name);
-        setEmail(trainer.email);
-        setPassword(trainer.password);
-        setType(trainer.type);
-        setPhone(trainer.phone);
+    const openModal = (staff) => {
+        setId(staff._id);
+        setName(staff.name);
+        setEmail(staff.email);
+        setPassword(staff.password);
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveTrainer({
+        dispatch(saveStaff({
             _id: id,
-            name, email, password, type, phone
+            name, email, password
         }));
-        props.history.push("/trainers");
+        props.history.push('/staffs');
     }
 
 
@@ -56,12 +52,11 @@ function CreateTrainer(props){
         <div>
             <p className="back-to-home">
                 <span>
-                    <Link to="/trainers"> <img src={url} width={32} height={32}/></Link>
+                    <Link to="/staffs"> <img src={url} width={32} height={32}/></Link>
                 </span>
             </p>
         </div>
         {loading?<div><Spinner color="primary" /></div> :
-
         error? <div>{error}</div>:
         (
             <Row>
@@ -87,19 +82,6 @@ function CreateTrainer(props){
                             <Input value={password} type="password" name="password" id="password"
                             onChange={(e) => setPassword(e.target.value)}/>
                         </FormGroup>
-                        <FormGroup>
-                            <Label for="type">Type</Label>
-                            <Input value={type} type="select" name="type" id="type"
-                            onChange={(e) => setType(e.target.value)}>
-                                <option>Internal</option>
-                                <option>External</option>
-                            </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="phone">Phone</Label>
-                            <Input value={phone} type="number" name="phone" id="phone"
-                            onChange={(e) => setPhone(e.target.value)}/>
-                        </FormGroup>
                         <Button type="submit" outline color="primary" className='mr-2'>Create</Button>
                     </Form>
                 </Col>
@@ -109,4 +91,4 @@ function CreateTrainer(props){
     )  
 }
 
-export default CreateTrainer;
+export default CreateStaff;
