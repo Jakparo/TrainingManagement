@@ -1,11 +1,11 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
 import config from './config';
 import userRoute from './routes/userRoute';
 import orderRoute from './routes/orderRoute';
+import categoryRoute from './routes/categoryRoute';
 
 const mongodbUrl = config.MONGODB_URL;
 const app = express();
@@ -22,6 +22,7 @@ mongoose.connect(mongodbUrl, {
 
 app.use("/api/users", userRoute);
 app.use("/api/orders", orderRoute);
+app.use("/api/categories", categoryRoute);
 
 
-app.listen(config.PORT, ()=> {console.log(`Server started at http://localhost:${port}`)});
+app.listen(config.PORT, ()=> {console.log(`Server started at http://localhost:${config.PORT}`)});

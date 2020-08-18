@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     isAdmin: { type: Boolean, required: false, default: false},
     isTraining: { type: Boolean, required: false, default: false},
     isTrainer:{ type: Boolean, required: false, default: false},
-    // course: [{ type: Schema.Types.ObjectId, ref: 'Course'}]
+    course: [{ type: Schema.Types.ObjectId, ref: 'Course'}]
 });
 
 

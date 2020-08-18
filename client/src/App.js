@@ -23,6 +23,14 @@ import StaffsScreen from './Screens/StaffsScreen'
 import StaffScreen from './Screens/StaffScreen'
 import CreateStaff from './Screens/CreateStaff'
 
+import TraineeScreen from './Screens/TraineeScreen';
+import TraineesScreen from './Screens/TraineesScreen';
+import CreateTrainee from './Screens/CreateTrainee';
+
+import CategoryScreen from './Screens/CategoryScreen';
+import CategoriesScreen from './Screens/CategoriesScreen';
+import CreateCategory from './Screens/CreateCategory';
+
 function App() {
     
     const userSignin = useSelector(state=>state.userSignin);
@@ -97,6 +105,12 @@ function App() {
                     <Route path="/createStaff" exact component={CreateStaff}/>
                     <Route path="/staff/:id" exact component={StaffScreen}/>
                     <Route path="/staffs" exact component={StaffsScreen}/>
+                    <Route path="/createTrainee" exact component={CreateTrainee}/>
+                    <Route path="/trainee/:id" exact component={TraineeScreen}/>
+                    <Route path="/trainees" exact component={TraineesScreen}/>
+                    <Route path="/createCategory" exact component={CreateCategory}/>
+                    <Route path="/category/:id" exact component={CategoryScreen}/>
+                    <Route path="/categories" exact component={CategoriesScreen}/>
 
                 </Container>
             </main>
