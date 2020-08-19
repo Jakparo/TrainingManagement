@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Spinner, Row, Col, Table,
-FormGroup, Label, Input, Button, Form} from 'reactstrap';
+import { Row, Col, FormGroup, 
+    Label, Input, Button, Form} from 'reactstrap';
 
-import {saveCourse, listTrainees, listCategories} from '../actions/staffActions';
+import {saveCourse, listTrainees, listCategories, listTopics} from '../actions/staffActions';
 import { listTrainers} from '../actions/adminActions';
 
 
 import  url  from '../icons/return.svg'
 
 function CreateCategory(props){
+    const topicList =  useSelector(state => state.topicList);
+    const {topics} = topicList;
 
     const trainerList =  useSelector(state => state.trainerList);
     const {trainers} = trainerList;
@@ -25,6 +27,7 @@ function CreateCategory(props){
     const [name, setName] = useState('');
     const [trainer, setTrainer] = useState('');
     const [trainee, setTrainees] = useState('');
+    const [topic, setTopic] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const courseSave = useSelector(state => state.courseSave);
@@ -40,6 +43,7 @@ function CreateCategory(props){
         dispatch(listTrainers());
         dispatch(listTrainees());
         dispatch(listCategories());
+        dispatch(listTopics());
         return () => {
             // 
         }
@@ -49,12 +53,11 @@ function CreateCategory(props){
         e.preventDefault();
         dispatch(saveCourse({
             _id: id,
-            name, description, trainer, trainees, category
+            name, description, trainer, trainees, category, topic
         }));
-        if(submitHandler){
             props.history.push('/courses');
         }
-    }
+    
 
 
     return (
@@ -95,6 +98,17 @@ function CreateCategory(props){
                             {
                                 trainees.map(trainee=> 
                                     <option value={trainee._id}>{trainee.name}</option>
+                                )
+                            }
+                            </Input>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="topic">Topic</Label>
+                            <Input  type="select" name="topic" id="topic"
+                            onChange={(e) => setTopic(e.target.value)} required>
+                            {
+                                topics.map(topic=> 
+                                    <option value={topic._id}>{topic.name}</option>
                                 )
                             }
                             </Input>

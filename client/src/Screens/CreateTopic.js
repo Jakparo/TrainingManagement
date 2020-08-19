@@ -4,19 +4,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Spinner, Row, Col,
 FormGroup, Label, Input, Button, Form} from 'reactstrap';
 
-import {saveStaff} from '../actions/adminActions';
+import {saveTopic} from '../actions/staffActions';
 import  url  from '../icons/return.svg'
 
-function CreateStaff(props){
+function CreateTopic(props){
     const [id, setId] = useState('');
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password,  setPassword] = useState('');
-    const staffSave = useSelector(state => state.staffSave);
-    const { loading: loadingSave, success: successSave, error: errorSave } = staffSave;
+    const [description, setDescription] = useState('');
+    const topicSave = useSelector(state => state.topicSave);
+    const { loading: loadingSave, success: successSave, error: errorSave } = topicSave;
     
-    const staffDetails = useSelector(state => state.staffDetails );
-    const { staff, loading, error } = staffDetails;
+    const topicDetails = useSelector(state => state.topicDetails );
+    const { topic, loading, error } = topicDetails;
 
 
     const dispatch = useDispatch();
@@ -30,20 +29,19 @@ function CreateStaff(props){
         }
     }, [successSave]);
 
-    const openModal = (staff) => {
-        setId(staff._id);
-        setName(staff.name);
-        setEmail(staff.email);
-        setPassword(staff.password);
+    const openModal = (topic) => {
+        setId(topic._id);
+        setName(topic.name);
+        setDescription(topic.description);
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveStaff({
+        dispatch(saveTopic({
             _id: id,
-            name, email, password
+            name, description
         }));
-        props.history.push('/staffs');
+        props.history.push('/topics');
     }
 
 
@@ -52,7 +50,7 @@ function CreateStaff(props){
         <div>
             <p className="back-to-home">
                 <span>
-                    <Link to="/staffs"> <img src={url} width={32} height={32}/></Link>
+                    <Link to="/topics"> <img src={url} width={32} height={32}/></Link>
                 </span>
             </p>
         </div>
@@ -61,7 +59,7 @@ function CreateStaff(props){
         (
             <Row>
                 <Col className='mx-auto' sm='10' xl='4' lg='4' md='4' xs='10'>
-                    <h3> User Profile</h3>
+                    <h3> Topic Detail</h3>
                     <Form onSubmit={submitHandler}>
                         <div>
                             {loading && <div>Loading...</div>}
@@ -73,14 +71,9 @@ function CreateStaff(props){
                             onChange={(e) => setName(e.target.value)} required/>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="email">Email</Label>
-                            <Input value={email} type="email" name="email" id="email"
-                            onChange={(e) => setEmail(e.target.value)} required/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="password">Password</Label>
-                            <Input value={password} type="password" name="password" id="password"
-                            onChange={(e) => setPassword(e.target.value)}/>
+                            <Label for="description">Description</Label>
+                            <Input value={description} type="text" name="description" id="description"
+                            onChange={(e) => setDescription(e.target.value)} required/>
                         </FormGroup>
                         <Button type="submit" outline color="primary" className='mr-2'>Create</Button>
                     </Form>
@@ -91,4 +84,4 @@ function CreateStaff(props){
     )  
 }
 
-export default CreateStaff;
+export default CreateTopic;

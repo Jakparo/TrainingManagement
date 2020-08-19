@@ -16,7 +16,8 @@ import{ CATEGORY_DELETE_FAIL, CATEGORY_DELETE_SUCCESS, CATEGORY_DELETE_REQUEST,
 import{ COURSE_DELETE_FAIL, COURSE_DELETE_SUCCESS, COURSE_DELETE_REQUEST,
     COURSE_SAVE_FAIL, COURSE_SAVE_SUCCESS, COURSE_SAVE_REQUEST, 
     COURSE_DETAILS_FAIL, COURSE_DETAILS_SUCCESS, COURSE_DETAILS_REQUEST, 
-    COURSE_LIST_FAIL, COURSE_LIST_SUCCESS, COURSE_LIST_REQUEST
+    COURSE_LIST_FAIL, COURSE_LIST_SUCCESS, COURSE_LIST_REQUEST,
+    COURSE_CATEGORY_REQUEST, COURSE_CATEGORY_SUCCESS, COURSE_CATEGORY_FAIL 
 } from '../constants/staffContants';
 
 import{ TOPIC_DELETE_FAIL, TOPIC_DELETE_SUCCESS, TOPIC_DELETE_REQUEST,
@@ -24,6 +25,17 @@ import{ TOPIC_DELETE_FAIL, TOPIC_DELETE_SUCCESS, TOPIC_DELETE_REQUEST,
     TOPIC_DETAILS_FAIL, TOPIC_DETAILS_SUCCESS, TOPIC_DETAILS_REQUEST, 
     TOPIC_LIST_FAIL, TOPIC_LIST_SUCCESS, TOPIC_LIST_REQUEST
 } from '../constants/staffContants';
+
+//COURSE CATEGORY
+const courseCategoryLists = (categoryId) => async (dispatch) =>{
+    try{
+        dispatch({type: COURSE_CATEGORY_REQUEST});
+        const {data} = await axios.get("/api/course/category/" + categoryId);
+        dispatch({type: COURSE_CATEGORY_SUCCESS, payload:data});
+    } catch (error){
+        dispatch({type: COURSE_CATEGORY_FAIL, payload: error.message});
+    }
+}
 
 // TOPIC
 const listTopics = (name = '', searchKeyword ='') => async (dispatch) => {
@@ -275,4 +287,5 @@ const deleteCategory = (categoryId) => async (dispatch, getState) => {
 
 export {listTrainees, detailsTrainee, saveTrainee, deleteTrainee,
     listCategories, detailsCategory, saveCategory, deleteCategory,
-    listCourses, detailsCourse, saveCourse, deleteCourse}
+    listCourses, detailsCourse, saveCourse, deleteCourse,
+    listTopics, detailsTopic, saveTopic, deleteTopic, courseCategoryLists}

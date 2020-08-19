@@ -4,36 +4,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Spinner, Row, Col, Table,
 FormGroup, Label, Input, Button, Form} from 'reactstrap';
 
-import { detailsCourse,  saveCourse, deleteCourse} from '../actions/staffActions';
+import { detailsTopic,  saveTopic, deleteTopic} from '../actions/staffActions';
 import  url  from '../icons/return.svg'
 
-function CourseScreen(props){
-
-    const trainerList =  useSelector(state => state.trainerList);
-    const {trainers} = trainerList;
-
-    const traineeList =  useSelector(state => state.traineeList);
-    const {trainees} = traineeList;
-
-    const categoryList =  useSelector(state => state.categoryList);
-    const {categories} = categoryList;
+function TopicScreen(props){
 
     const [modalVisible, setModalVisible] = useState(false);
     const [id, setId] = useState('');
     const [name, setName] = useState('');
-    const [trainer, setTrainer] = useState('');
-    const [trainee, setTrainees] = useState('');
-    const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
+    const topicSave = useSelector(state => state.topicSave);
+    const { loading: loadingSave, success: successSave, error: errorSave } = topicSave;
     
-    const courseSave = useSelector(state => state.courseSave);
-    const { loading: loadingSave, success: successSave, error: errorSave } = courseSave;
-    
-    const courseDetails = useSelector(state => state.courseDetails );
-    const { course, loading, error } = courseDetails;
+    const topicDetails = useSelector(state => state.topicDetails );
+    const { topic, loading, error } = topicDetails;
 
-    const courseDelete = useSelector(state => state.courseDelete);
-    const { loading: loadingDelete, success: successDelete, error: errorDelete } = courseDelete;
+    const topicDelete = useSelector(state => state.topicDelete);
+    const { loading: loadingDelete, success: successDelete, error: errorDelete } = topicDelete;
 
     const dispatch = useDispatch();
 
@@ -41,35 +28,29 @@ function CourseScreen(props){
         if (successSave) {
             setModalVisible(false);
         }
-        dispatch(detailsCourse(props.match.params.id));
+        dispatch(detailsTopic(props.match.params.id));
         return () => {
         
         }
     }, [successSave]);
 
-    const openModal = (course) => {
+    const openModal = (topic) => {
         setModalVisible(true);
-        setId(course._id);
-        setName(course.name);
-        setTrainer(course.trainer);
-        setTrainees(course.trainees);
-        setCategory(course.category);
-        setDescription(course.description);
-    }
+        setId(topic._id);
+        setName(topic.name);
+        setDescription(topic.description);
+        }
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveCourse({
+        dispatch(saveTopic({
             _id: id,
-            name, trainer, trainees, category, description
+            name, description
         }));
     }
-    const deleteHandler = (course) => {
-        dispatch(deleteCourse(course._id));
-        if(successDelete){
-            props.history.push('/courses');
-        }
-        
+    const deleteHandler = (topic) => {
+        dispatch(deleteTopic(topic._id));
+        props.history.push('/topics');
     }
 
 
@@ -78,7 +59,7 @@ function CourseScreen(props){
         <div>
             <p className="back-to-home">
                 <span>
-                    <Link to="/courses"> <img src={url} width={32} height={32}/></Link>
+                    <Link to="/topics"> <img src={url} width={32} height={32}/></Link>
                 </span>
             </p>
         </div>
@@ -89,12 +70,12 @@ function CourseScreen(props){
                 {
                     modalVisible && 
                 <Col className='mx-auto' sm='10' xl='4' lg='4' md='4' xs='10'>
-                    <h3> Course Profile</h3>
+                    <h3> Topic Detail</h3>
                     <Form onSubmit={submitHandler}>
                         <div>
                             {loading && <div>Loading...</div>}
                             {error && <div>{error}</div>}
-                    
+                            {/* {success && <div>Profile Saved Successfully.</div>} */}
                         </div>
                         <FormGroup>
                             <Label for="name">Name</Label>
@@ -104,7 +85,7 @@ function CourseScreen(props){
                         <FormGroup>
                             <Label for="description">Description</Label>
                             <Input value={description} type="text" name="description" id="description"
-                            onChange={(e) => setDescription(e.target.value)} required/>
+                            onChange={(e) => setDescription(e.target.value)}/>
                         </FormGroup>
                         <Button type="submit" outline color="primary" className='mr-2'>Update</Button>
                     </Form>
@@ -116,17 +97,16 @@ function CourseScreen(props){
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{course.name}</td>
-                        <td>{course.description}</td>
+                        <td>{topic.name}</td>
+                        <td>{topic.description}</td>
                         <td>
-                            <Button color="primary" outline onClick={() => openModal(course)} >Edit</Button>
+                            <Button color="primary" outline onClick={() => openModal(topic)} >Edit</Button>
                             {' '}
-                            <Button color="danger" outline onClick={() => deleteHandler(course)} >Delete</Button>
+                            <Button color="danger" outline onClick={() => deleteHandler(topic)} >Delete</Button>
                         </td>
                     </tr>
                 
@@ -139,4 +119,4 @@ function CourseScreen(props){
     )  
 }
 
-export default CourseScreen;
+export default TopicScreen;

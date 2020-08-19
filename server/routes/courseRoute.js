@@ -4,6 +4,16 @@ import { isAuth, isTraining } from '../util';
 
 const router = express.Router();
 
+router.get("/category/:id", async(req, res)=>{
+    const courses = await Course.find( {category: req.params.id} );
+    if (courses) {
+    res.send(courses)
+    } else {
+    console.log('Can’t find course by category')
+    res.status(999).send({message: "Course not found"})
+    }
+})
+
 router.get("/", async (req, res) => {
     const name = req.query.name ? {name: req.query.name} : {};
     const searchKeyword = req.query.searchKeyword ? {
@@ -21,6 +31,7 @@ router.post('/', isAuth, isTraining, async(req, res) => {
         name: req.body.name,
         trainer: req.body.trainer,
         trainees: req.body.trainees,
+        topic: req.body.topic,
         category: req.body.category,
         description: req.body.description
     });
@@ -33,7 +44,7 @@ router.post('/', isAuth, isTraining, async(req, res) => {
 
 router.put("/:id", isAuth, isTraining, async (req, res) => {
     const courseId = req.params.id;
-    const course = await User.findById(courseId);
+    const course = await Course.findById(courseId);
     if (course) {
         course.name = req.body.name;
         course.trainer = req.body.trainer;

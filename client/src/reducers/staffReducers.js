@@ -13,7 +13,8 @@ import{ CATEGORY_SAVE_REQUEST, CATEGORY_SAVE_SUCCESS, CATEGORY_SAVE_FAIL,
 import{ COURSE_SAVE_REQUEST, COURSE_SAVE_SUCCESS, COURSE_SAVE_FAIL, 
     COURSE_DELETE_FAIL, COURSE_DELETE_SUCCESS, COURSE_DELETE_REQUEST, 
     COURSE_DETAILS_FAIL, COURSE_DETAILS_REQUEST, COURSE_DETAILS_SUCCESS,
-    COURSE_LIST_FAIL, COURSE_LIST_SUCCESS, COURSE_LIST_REQUEST 
+    COURSE_LIST_FAIL, COURSE_LIST_SUCCESS, COURSE_LIST_REQUEST, 
+    COURSE_CATEGORY_REQUEST, COURSE_CATEGORY_SUCCESS, COURSE_CATEGORY_FAIL
 } from "../constants/staffContants"
 
 import{ TOPIC_DELETE_FAIL, TOPIC_DELETE_SUCCESS, TOPIC_DELETE_REQUEST,
@@ -21,6 +22,21 @@ import{ TOPIC_DELETE_FAIL, TOPIC_DELETE_SUCCESS, TOPIC_DELETE_REQUEST,
     TOPIC_DETAILS_FAIL, TOPIC_DETAILS_SUCCESS, TOPIC_DETAILS_REQUEST, 
     TOPIC_LIST_FAIL, TOPIC_LIST_SUCCESS, TOPIC_LIST_REQUEST
 } from '../constants/staffContants';
+
+
+//COURSE CATEGORY
+function courseCategoryListReducer(state={courses:[]}, action) {
+    switch (action.type) {
+        case COURSE_CATEGORY_REQUEST:
+            return {loading: true, courses: []};
+        case COURSE_CATEGORY_SUCCESS:
+            return {loading: false, courses: action.payload};
+        case COURSE_CATEGORY_FAIL:
+            return{ loading: true, error: action.payload}
+        default:
+            return state;
+    }
+}
 
 // Topic
 function topicListReducer(state= {topics: [] }, action) {
@@ -240,4 +256,5 @@ function categorySaveReducer(state = { category: {} }, action) {
 
 export {traineeListReducer, traineeDetailsReducer, traineeSaveReducer, traineeDeleteReducer, 
         categoryListReducer, categoryDetailsReducer, categorySaveReducer, categoryDeleteReducer,
-        courseListReducer, courseDetailsReducer, courseSaveReducer, courseDeleteReducer}
+        courseListReducer, courseDetailsReducer, courseSaveReducer, courseDeleteReducer, courseCategoryListReducer,
+        topicListReducer, topicDetailsReducer, topicSaveReducer, topicDeleteReducer}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Spinner, Row, Col, Table,
+import { Spinner, Row, Col,
 FormGroup, Label, Input, Button, Form} from 'reactstrap';
 
 import {saveCategory} from '../actions/staffActions';

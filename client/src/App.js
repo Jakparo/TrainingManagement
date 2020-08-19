@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import{ Collapse, Navbar, NavbarToggler,
         NavbarBrand, Nav, NavItem,
         Dropdown, DropdownToggle, 
         DropdownMenu, DropdownItem, Container
 } from 'reactstrap';  
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Link} from 'react-router-dom';
+import { listCategories } from './actions/staffActions';
+
+
 
 // Import Screen Components
 import FirstScreen from './Screens/FirstScreen';
@@ -35,7 +38,16 @@ import CoursesScreen from './Screens/CoursesScreen';
 import CourseScreen from './Screens/CourseScreen';
 import CreateCourse from './Screens/CreateCourse';
 
+import CreateTopic from './Screens/CreateTopic';
+import TopicsScreen from './Screens/TopicsScreen';
+import TopicScreen from './Screens/TopicScreen';
+
+import CourseCategoryScreen from './Screens/CourseCategoryScreen';
+
 function App() {
+    const dispatch = useDispatch();
+    const categoryList =  useSelector(state => state.categoryList);
+    const {categories, loading, error} = categoryList;
     
     const userSignin = useSelector(state=>state.userSignin);
     const {userInfo} = userSignin;
@@ -47,6 +59,13 @@ function App() {
 
     const toggle = () => setDropdownOpen(prevState => !prevState);
     
+    useEffect(()=>{
+        dispatch(listCategories());
+        return () => {
+            //
+        };
+    },[])
+
     return (
     <BrowserRouter>
         <div>
@@ -83,12 +102,13 @@ function App() {
                                             Course
                                         </DropdownToggle>
                                         <DropdownMenu>
-                                            <DropdownItem>
-                                                <Link to="/orders">Orders</Link>
-                                            </DropdownItem>
-                                            <DropdownItem>
-                                                <Link to="/products">Products</Link>
-                                            </DropdownItem>
+                                            {
+                                                categories.map (category =>
+                                                    <DropdownItem>
+                                                        <Link to={"/courseCategory/" + category._id} >{category.name}</Link>
+                                                    </DropdownItem>
+                                                )
+                                            }
                                         </DropdownMenu>
                                     </Dropdown>
                                 )}
@@ -118,14 +138,13 @@ function App() {
                     <Route path="/courses" exact component={CoursesScreen}/>
                     <Route path="/createCourse" exact component={CreateCourse}/>
                     <Route path="/course/:id" exact component={CourseScreen}/>
+                    <Route path="/createTopic" exact component={CreateTopic}/>
+                    <Route path="/topics" exact component={TopicsScreen}/>
+                    <Route path="/topic/:id" exact component={TopicScreen}/>
+                    <Route path="/courseCategory/:id" exact component={CourseCategoryScreen}/>
 
                 </Container>
             </main>
-            {/* <footer>
-                <div className='b-0'>
-                    Copyright © 2020 ETravel
-                </div>
-            </footer> */}
                 
         </div>
     </BrowserRouter>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import {  Row, Col, Form, FormGroup,
-    Label, Input, Button, Table } from 'reactstrap';
+    Label, Input, Button } from 'reactstrap';
 import { logout, update } from '../actions/userAction';
 
 import { useDispatch, useSelector } from 'react-redux';

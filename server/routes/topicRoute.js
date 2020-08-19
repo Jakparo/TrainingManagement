@@ -30,14 +30,14 @@ router.post('/', isAuth, isTraining, async(req, res) => {
 
 router.put("/:id", isAuth, isTraining, async (req, res) => {
     const topicId = req.params.id;
-    const topic = await User.findById(topicId);
+    const topic = await Topic.findById(topicId);
     if (topic) {
         topic.name = req.body.name;
         topic.description = req.body.description;
         
         const updatedTopic = await topic.save();
-    if (updatedCourse) {
-        return res.status(200).send({ message: 'Course Updated', data: updatedCourse});
+    if (updatedTopic) {
+        return res.status(200).send({ message: 'Topic Updated', data: updatedTopic});
     }
 }})
 
