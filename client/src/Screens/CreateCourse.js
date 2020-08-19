@@ -56,7 +56,8 @@ function CreateCategory(props){
             name, description, trainer, trainees, category, topic
         }));
             props.history.push('/courses');
-        }
+        
+    }
     
 
 

@@ -8,9 +8,9 @@ import  url  from '../icons/return.svg'
 
 function CourseCategoryScreen(props){
 
+    const courseCategoryList =  useSelector(state => state.courseCategoryList);
+    const {courses, loading, error} = courseCategoryList;
     const dispatch = useDispatch();
-    const courseList =  useSelector(state => state.courseList);
-    const {courses, loading, error} = courseList;
 
     useEffect(() => {
         dispatch(courseCategoryLists(props.match.params.id));

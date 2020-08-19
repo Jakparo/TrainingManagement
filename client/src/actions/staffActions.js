@@ -30,7 +30,7 @@ import{ TOPIC_DELETE_FAIL, TOPIC_DELETE_SUCCESS, TOPIC_DELETE_REQUEST,
 const courseCategoryLists = (categoryId) => async (dispatch) =>{
     try{
         dispatch({type: COURSE_CATEGORY_REQUEST});
-        const {data} = await axios.get("/api/course/category/" + categoryId);
+        const {data} = await axios.get("/api/courses/category/" + categoryId);
         dispatch({type: COURSE_CATEGORY_SUCCESS, payload:data});
     } catch (error){
         dispatch({type: COURSE_CATEGORY_FAIL, payload: error.message});
