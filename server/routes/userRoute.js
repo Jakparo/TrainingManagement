@@ -25,7 +25,7 @@ router.post("/trainer", isAuth, async (req, res) => {
         phone: req.body.phone,
         password: req.body.password,
         isTrainer: true
-    });
+});
 
     const newTrainer = await trainer.save();
     if (newTrainer) {

@@ -8,7 +8,7 @@ function FirstScreen(props){
     return <>
         {/* {name && <h2>{name}</h2>} */}
         <Row className="justify-content-center align-items-center"  style={{ height: '80vh'}} >
-            <Col  xl="4" md="6" sm="6" xs='8' sm='8' className="text-center" >
+            <Col  xl="4" md="6" xs='8' sm='8' className="text-center" >
                 <h1 className="focus-in-expand">Happy Learning <img style={{marginLeft:'1rem'}}src={url} width={35} height={35}/> </h1>
             </Col>                    
         </Row>

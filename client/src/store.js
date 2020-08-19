@@ -7,8 +7,9 @@ import { trainerListReducer, trainerDetailsReducer, trainerSaveReducer, trainerD
     } from './reducers/adminReducers'
 
 import {traineeListReducer, traineeDetailsReducer, traineeSaveReducer, traineeDeleteReducer, 
-        categoryListReducer, categoryDetailsReducer, categorySaveReducer, categoryDeleteReducer
-        } from './reducers/staffReducers'
+        categoryListReducer, categoryDetailsReducer, categorySaveReducer, categoryDeleteReducer,
+        courseListReducer, courseDetailsReducer, courseSaveReducer, courseDeleteReducer,
+        topicListReducer, topicDetailsReducer, topicSaveReducer, topicDeleteReducer} from './reducers/staffReducers'
 
 import { userSigninReducer, userUpdateReducer } from './reducers/userReducers';
 
@@ -39,8 +40,17 @@ const reducer = combineReducers({
     categoryList: categoryListReducer,
     categoryDetails: categoryDetailsReducer,
     categorySave: categorySaveReducer,
-    categoryDelete: categoryDeleteReducer
-
+    categoryDelete: categoryDeleteReducer,
+// course
+    courseList: courseListReducer,
+    courseDetails: courseDetailsReducer,
+    courseSave: courseSaveReducer,
+    courseDelete: courseDeleteReducer,
+// topic
+    topicList: topicListReducer,
+    topicDetails: topicDetailsReducer,
+    topicSave: topicSaveReducer,
+    topicDelete: topicDeleteReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

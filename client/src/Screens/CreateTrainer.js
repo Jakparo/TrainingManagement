@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Spinner, Row, Col, Table,
-FormGroup, Label, Input, Button, Form} from 'reactstrap';
+import { Spinner, Row, Col, FormGroup, Label, Input, Button, Form} from 'reactstrap';
 import {  saveTrainer} from '../actions/adminActions';
 import  url  from '../icons/return.svg'
 

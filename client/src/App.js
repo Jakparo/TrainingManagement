@@ -31,6 +31,10 @@ import CategoryScreen from './Screens/CategoryScreen';
 import CategoriesScreen from './Screens/CategoriesScreen';
 import CreateCategory from './Screens/CreateCategory';
 
+import CoursesScreen from './Screens/CoursesScreen';
+import CourseScreen from './Screens/CourseScreen';
+import CreateCourse from './Screens/CreateCourse';
+
 function App() {
     
     const userSignin = useSelector(state=>state.userSignin);
@@ -111,6 +115,9 @@ function App() {
                     <Route path="/createCategory" exact component={CreateCategory}/>
                     <Route path="/category/:id" exact component={CategoryScreen}/>
                     <Route path="/categories" exact component={CategoriesScreen}/>
+                    <Route path="/courses" exact component={CoursesScreen}/>
+                    <Route path="/createCourse" exact component={CreateCourse}/>
+                    <Route path="/course/:id" exact component={CourseScreen}/>
 
                 </Container>
             </main>

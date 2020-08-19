@@ -66,6 +66,26 @@ function HomeScreen(props){
                             </Link>
                         </Card>
                     </Col>
+                    <Col lg='3' md='4' sm='6' xs='6'>
+                        <Card>
+                            <Link to={'/courses'}>
+                                <div style={{backgroundColor: '#646566', height:'22vh'}}/>
+                                <CardBody>
+                                    <CardTitle className="font-weight-bold">Courses</CardTitle>
+                                </CardBody>
+                            </Link>
+                        </Card>
+                    </Col>
+                    <Col lg='3' md='4' sm='6' xs='6'>
+                        <Card>
+                            <Link to={'/topics'}>
+                                <div style={{backgroundColor: '#646566', height:'22vh'}}/>
+                                <CardBody>
+                                    <CardTitle className="font-weight-bold">Topics</CardTitle>
+                                </CardBody>
+                            </Link>
+                        </Card>
+                    </Col>
                 </>:
                 <div></div>
         }

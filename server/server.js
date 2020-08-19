@@ -4,8 +4,9 @@ import bodyParser from 'body-parser';
 
 import config from './config';
 import userRoute from './routes/userRoute';
-import orderRoute from './routes/orderRoute';
 import categoryRoute from './routes/categoryRoute';
+import courseRoute from './routes/courseRoute';
+import topicRoute from './routes/topicRoute';
 
 const mongodbUrl = config.MONGODB_URL;
 const app = express();
@@ -21,8 +22,9 @@ mongoose.connect(mongodbUrl, {
 
 
 app.use("/api/users", userRoute);
-app.use("/api/orders", orderRoute);
 app.use("/api/categories", categoryRoute);
+app.use("/api/courses", courseRoute);  
+app.use("/api/topics", topicRoute);   
 
 
 app.listen(config.PORT, ()=> {console.log(`Server started at http://localhost:${config.PORT}`)});
