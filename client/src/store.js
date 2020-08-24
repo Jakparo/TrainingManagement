@@ -13,6 +13,8 @@ import {traineeListReducer, traineeDetailsReducer, traineeSaveReducer, traineeDe
 
 import { userSigninReducer, userUpdateReducer } from './reducers/userReducers';
 
+import {myCourseListReducer} from './reducers/courseReducers';
+
 
 const userInfo = Cookie.getJSON("userInfo") || null;
 
@@ -46,6 +48,7 @@ const reducer = combineReducers({
     courseDetails: courseDetailsReducer,
     courseSave: courseSaveReducer,
     courseDelete: courseDeleteReducer,
+    myCourseList: myCourseListReducer,
 // topic
     topicList: topicListReducer,
     topicDetails: topicDetailsReducer,

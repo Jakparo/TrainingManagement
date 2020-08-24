@@ -4,6 +4,11 @@ import { isAuth, isTraining } from '../util';
 
 const router = express.Router();
 
+router.get("/mine", isAuth, async(req,res)=>{
+    const courses = await Course.find({trainer: req.user._id});
+    res.send(courses);
+})
+
 router.get("/category/:id", async(req, res)=>{
     const courses = await Course.find( {category: req.params.id} );
     if (courses) {

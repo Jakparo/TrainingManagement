@@ -87,7 +87,18 @@ function HomeScreen(props){
                         </Card>
                     </Col>
                 </>:
-                <div></div>
+                <>
+                    <Col lg='3' md='4' sm='6' xs='6'>
+                        <Card>
+                            <Link to={'/myCourse'}>
+                                <div style={{backgroundColor: '#646566', height:'22vh'}}/>
+                                <CardBody>
+                                    <CardTitle className="font-weight-bold">MyCourses</CardTitle>
+                                </CardBody>
+                            </Link>
+                        </Card>
+                    </Col>
+                </>
         }
 
     </Row>

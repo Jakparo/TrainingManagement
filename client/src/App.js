@@ -34,6 +34,7 @@ import CategoryScreen from './Screens/CategoryScreen';
 import CategoriesScreen from './Screens/CategoriesScreen';
 import CreateCategory from './Screens/CreateCategory';
 
+import PersonalCourseScreen from './Screens/PersonalCourseScreen';
 import CoursesScreen from './Screens/CoursesScreen';
 import CourseScreen from './Screens/CourseScreen';
 import CreateCourse from './Screens/CreateCourse';
@@ -119,6 +120,7 @@ function App() {
             <main>
                 <Container fluid style={{marginTop: '2rem', height: '80vh'}} >
                     
+                    <Route path="/myCourse" component={PersonalCourseScreen}/>
                     <Route path="/profile" component={ProfileScreen} />
                     <Route path="/signin" component={SigninScreen}/>
                     <Route path="/createTrainer" exact component={CreateTrainer}/>
